@@ -1,0 +1,17 @@
+class Acronym {
+    private String acronym;
+    Acronym(String phrase) {
+       this.acronym = acronymGenerator(phrase);
+    }
+    String get() {
+        return acronym;
+    }
+    private String acronymGenerator(String phrase){
+        String[] words = phrase.replaceAll("[^a-zA-Z\\s-]", "").split("[\\s-]+");
+		StringBuilder sb = new StringBuilder();
+		for(String word : words) {
+			sb=sb.append(word.charAt(0));
+		}
+		return sb.toString().toUpperCase();
+    }
+}
