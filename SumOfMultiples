@@ -1,0 +1,20 @@
+import java.util.*;
+class SumOfMultiples {
+    private int sum = 0; 
+    SumOfMultiples(int number, int[] set) {
+        Set<Integer> uniqueMultiples = new HashSet<>();
+        for (int baseValue : set) {
+            if (baseValue > 0) {
+                for (int i = baseValue; i < number; i += baseValue) {
+                    uniqueMultiples.add(i);  
+                }
+            }
+        }
+        for (int multiple : uniqueMultiples) {
+            this.sum += multiple;
+        }
+    }
+    int getSum() {
+        return sum;
+    }
+}
