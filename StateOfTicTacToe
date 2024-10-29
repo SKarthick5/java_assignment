@@ -1,0 +1,65 @@
+class StateOfTicTacToe {
+    public GameState determineState(String[] board) {
+        validateBoard(board);
+        if (playerWon('X', board) || playerWon('O', board))
+            return GameState.WIN;
+        
+        if (isBoardFull(board)) return GameState.DRAW;
+
+        return GameState.ONGOING;
+    }
+    void validateBoard(String[] board) {
+        int countX = 0, countO = 0;
+
+        for (String row : board) {
+            for (char c : row.toCharArray()) {
+                if (c == 'X') countX++;
+                if (c == 'O') countO++;
+            }
+        }
+
+        if (countO > countX) {
+            throw new IllegalArgumentException("Wrong turn order: O started");
+        }
+        if (countX - countO > 1) {
+            throw new IllegalArgumentException("Wrong turn order: X went twice");
+        }
+        if (playerWon('X', board) && playerWon('O', board)) {
+            throw new IllegalArgumentException("Impossible board: game should have ended after the game was won");
+        }
+    }
+
+    boolean playerWon(char player, String[] board) {
+        return checkRows(player, board) || checkColumns(player, board) || checkDiagonals(player, board);
+    }
+
+    boolean checkRows(char player, String[] board) {
+        for (String row : board) {
+            if (row.equals("" + player + player + player)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    boolean checkColumns(char player, String[] board) {
+        for (int col = 0; col < 3; col++) {
+            if (board[0].charAt(col) == player && board[1].charAt(col) == player && board[2].charAt(col) == player) {
+                return true;
+            }
+        }
+        return false;
+    }
+    boolean checkDiagonals(char player, String[] board) {
+        return (board[0].charAt(0) == player && board[1].charAt(1) == player && board[2].charAt(2) == player) ||
+               (board[0].charAt(2) == player && board[1].charAt(1) == player && board[2].charAt(0) == player);
+    }
+    boolean isBoardFull(String[] board) {
+        for (String row : board) {
+            if (row.contains(" ")) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
